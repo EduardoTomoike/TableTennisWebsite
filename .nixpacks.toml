@@ -1,10 +1,8 @@
 [phases.setup]
-runtime = "python:3.11"  # Ensure your Python version matches your app requirements
+runtime = "python:3.12"  # Ensure your Python version matches your app requirements
 apt_pkgs = [
-    "libmysqlclient-dev",
+    "libmariadb-dev",
     "gcc",
     "pkg-config"  # Required for locating MySQL/MariaDB
 ]
-[phases.setup.env]
-MYSQLCLIENT_CFLAGS = "-I/usr/include/mysql"
-MYSQLCLIENT_LDFLAGS = "-L/usr/lib/x86_64-linux-gnu -lmysqlclient"
+
