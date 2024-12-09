@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Start Video Call with {{ coach.username }}</h2>
+<p>Click the button below to start the video call.</p>
+<a href="https://meet.jit.si/{{ room_name }}" target="_blank">
+    <button>Start Video Call</button>
+</a>
+{% endblock %}
+

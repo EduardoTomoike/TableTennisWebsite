@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        
+        .coach-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 0;
+            list-style-type: none;
+            justify-content: center;
+        }
+        .coach-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .coach-card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .coach-card p {
+            margin: 0.3rem 0;
+            color: #666;
+        }
+        .coach-card img {
+            border-radius: 50%;
+            margin-top: 0.5rem;
+        }
+       .welcome{
+        text-align: center;
+        margin: auto;
+        color: darkblue;
+        background-color: azure;
+       }
+       body{
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color:lightsteelblue;
+       }
+       .buttoncontainer{
+         justify-content: center;
+         display: flex;
+         gap: 1rem;
+       }
+       .registerbt{
+        font-weight: 600;
+        transition: all 300ms ease;
+        width: 8rem;
+        padding: 1rem;
+        border-radius: 2rem;
+       }
+       .loginbt{
+        font-weight: 600;
+        transition: all 300ms ease;
+        width: 8rem;
+        padding: 1rem;
+        border-radius: 2rem;
+       }
+    </style>
+</head>
+<body>
+    <div class = "welcome"><h1>Welcome to the Table Tennis Coaching Platform</h1></div>
+    <div class = "buttoncontainer">
+    <button class = "registerbt"><a href="{% url 'register' %}">Register</a></button>
+    <button class = "loginbt"><a href="{% url 'login' %}">Login</a></button>
+</div>
+    <main>
+        <h2>Available Coaches</h2>
+        <ul class="coach-list">
+            {% for coach in coaches %}
+                <li class="coach-card">
+                    <h3>{{ coach.user.username }}</h3>
+                    <p>Specialization: {{ coach.specialization }}</p>
+                    {% if coach.profile_picture %}
+                        <img src="{{ coach.profile_picture.url }}" alt="{{ coach.user.username }}'s Profile Picture" width="200">
+                    {% endif %}
+                    <p>Experience: {{ coach.experience_years }} years</p>
+                    <p>Certifications: {{ coach.certifications }}</p>
+                    <p>Gender: {{ coach.user.gender }}</p>
+                </li>
+            {% empty %}
+                <p>No coaches are available at the moment.</p>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .usn{
+            color: darkblue;
+            font-size: large;
+            font-weight: 600;
+
+        }
+        .pwu{
+            color: darkblue;
+            font-size: large;
+            font-weight: 600; 
+                                               
+        }
+        .sm{
+            font-weight: 600;
+        transition: all 300ms ease;
+        width: 8rem;
+        padding: 1rem;
+        border-radius: 2rem;
+        
+        }
+        body{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-align: center;
+            color: darkblue;
+        }
+        button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  
+}
+header{
+    background-color: lightsteelblue;
+}
+body{
+    background-color: lightsteelblue;
+}
+.back{
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                
+                <a class = "back" href="{% url 'logout' %}">Go back</a>
+
+            </ul>
+        </nav>
+
+    </header>
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+    <div class = "loginpage">
+        <label class="usn" for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        
+        <label class="pwu" for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        
+        <button class="sm" type="submit">Login</button></div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

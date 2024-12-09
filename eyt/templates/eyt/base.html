@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Table Tennis Platform{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css\style.css' %}">
+    <style>
+        
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 0;
+            list-style-type: none;
+            justify-content: center;
+        }
+        .profile-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .profile-card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .profile-card p {
+            margin: 0.3rem 0;
+            color: #666;
+        }
+        .profile-card img {
+            border-radius: 50%;
+            margin-top: 0.5rem;
+        }
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin: 1em 0;
+        }
+        .search-form input[type="text"] {
+            padding: 0.5em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 0.5em;
+        }
+        .search-form button {
+            padding: 0.5em 1em;
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background-color: #005bb5;
+        }
+        .navv{
+            display: flex;
+            gap: 20px;
+            background-color: antiquewhite;
+        }
+        body{
+            background-color: lightsteelblue;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        .navv{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            font-size: 1.5rem;
+            background-color: azure;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class = "navv">
+                <li><a href="{% url 'base' %}">Home</a></li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.role == 'player' %}
+                        <li><a href="{% url 'player_profile' %}">Player Profile</a></li>
+                        <li><a href="{% url 'my_uploaded_videos' %}">My Uploaded Videos</a></li>
+                        <li><a href="{% url 'upload_video' %}">Upload Video</a></li>
+                    {% elif request.user.role == 'coach' %}
+                        <li><a href="{% url 'coach_profile' %}">Coach Profile</a></li>
+                        <li><a href="{% url 'notifications' %}">Notifications</a></li>
+                    {% endif %}
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Search Form -->
+        <form method="get" action="{% url 'base' %}" class="search-form">
+            <input type="text" name="q" placeholder="Search" value="{{ search_query|default:'' }}">
+            <button type="submit">Search</button>
+        </form>
+
+        {% block content %}
+        
+        <!-- Display Available Coaches for Players -->
+        {% if request.user.role == 'player' %}
+            <h2>Available Coaches</h2>
+            <ul class="profile-list">
+                {% for coach in available_coaches %}
+                    <li class="profile-card">
+                        <h3>{{ coach.user.username }}</h3>
+                        <p>Specialization: {{ coach.specialization }}</p>
+                        <p>About: {{ coach.user.about }}</p>
+                        <p>Gender: {{ coach.user.gender }}</p>
+                        <p>Location: {{ coach.user.city }}, {{ coach.user.state }}</p>
+                        {% if coach.profile_picture %}
+                            <img src="{{ coach.profile_picture.url }}" alt="{{ coach.user.username }}'s Profile Picture" width="200">
+                        {% endif %}
+                        <p>Experience: {{ coach.experience_years }} years</p>
+                        <p>Certifications: {{ coach.certifications }}</p>
+                        <form action="{% url 'send_email' coach.user.id %}" method="get">
+                            <button type="submit">Send Email</button>
+                        </form>
+                        <form action="{% url 'video_call' coach.user.id %}" method="get">
+                            <button type="submit">Video Call</button>
+                        </form>
+                        <p>Availability: {{ coach.availability }}</p>
+                    </li>
+                {% empty %}
+                    <p>No coaches found matching your search.</p>
+                {% endfor %}
+            </ul>
+        
+        <!-- Display Active Players for Coaches -->
+        {% elif request.user.role == 'coach' %}
+            <h2>Active Players Seeking Coaching</h2>
+            <ul class="profile-list">
+                {% for player in active_players %}
+                    <li class="profile-card">
+                        <h3>{{ player.user.username }}</h3>
+                        <p>Rating: {{ player.rating }}</p>
+                        <p>About: {{ player.user.about }}</p>
+                        <p>Gender: {{ player.user.gender }}</p>
+                        <p>Location: {{ player.user.city }}, {{ player.user.state }}</p>
+                        {% if player.profile_picture %}
+                            <img src="{{ player.profile_picture.url }}" alt="{{ player.user.username }}'s Profile Picture" width="200">
+                        {% endif %}
+                        <p>Specialization: {{ player.specialization }}</p>
+                        <a href="{% url 'player_videos_for_review' player.id %}" class="btn btn-primary">View Videos</a>
+                    </li>
+                {% empty %}
+                    <p>No players found matching your search.</p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% endblock content %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Table Tennis Platform</p>
+    </footer>
+</body>
+</html>

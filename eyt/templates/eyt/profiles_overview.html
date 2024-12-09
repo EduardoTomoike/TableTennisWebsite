@@ -1,0 +1,22 @@
+{% extends "eyt/base.html" %}
+
+{% block content %}
+    <h2>All Players and Coaches</h2>
+    <h3>Players</h3>
+    <ul>
+        {% for player in players %}
+            <li>
+                <a href="{% url 'player_profile_detail' player.user.id %}">{{ player.user.username }}</a> - {{ player.rating }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Coaches</h3>
+    <ul>
+        {% for coach in coaches %}
+            <li>
+                <a href="{% url 'coach_profile_detail' coach.user.id %}">{{ coach.user.username }}</a> - {{ coach.specialization }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coach Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body{
+            color: darkblue;
+            background-color: lightsteelblue;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: large;
+
+            
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ user.username }}'s Profile</h1>
+    <p>Specialization: {{ user.specialization }}</p>
+    <p>Rating: {{ user.rating }}</p>
+    <a href="{% url 'edit_profile' %}">Edit Profile</a><br> 
+    <a href="{% url 'base' %}">Home</a><br> 
+    {% if request.user.is_authenticated and request.user.role == 'coach' %}
+    <a href="{% url 'edit_coach_profile' %}">Coach Profile Form</a><br>
+    {% endif %}
+</body>
+</html>
+

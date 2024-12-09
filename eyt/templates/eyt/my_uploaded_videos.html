@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Uploaded Videos</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body{
+            color: darkblue;
+            background-color: lightsteelblue;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: large;
+            
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'base' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>            
+    <h1>My Uploaded Videos</h1>
+    <ul>
+        {% for video in videos %}
+            <li>
+                <h3>{{ video.title }}</h3>
+                <video width="640" height="360" controls>
+                    <source src="{{ video.video_file.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>{{ video.description }}</p>
+                
+                <h4>Reviews</h4>
+                {% if video.videoreview_set.all %}
+                    <ul>
+                        {% for review in video.videoreview_set.all %}
+                            <li>
+                                <p><strong>Coach: {{ review.coach.user.username }}</strong></p>
+                                <p>Rating: {{ review.rating }}</p>
+                                <p>Comments: {{ review.review_text }}</p>
+                                <p><em>{{ review.timestamp }}</em></p>
+                                <form action="{% url 'send_email' review.coach.user.id %}" method="get">
+                                    <button type="submit">Send Email</button>
+                                </form>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No reviews yet for this video.</p>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No videos uploaded yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

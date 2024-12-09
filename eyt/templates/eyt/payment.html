@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Payment</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="card-number">Card Number:</label>
+        <input type="text" id="card-number" name="card_number" required><br>
+        
+        <label for="expiry-date">Expiry Date:</label>
+        <input type="text" id="expiry-date

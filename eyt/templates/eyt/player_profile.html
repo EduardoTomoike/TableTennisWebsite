@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        h1{
+            color: darkblue;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+        body{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: darkblue;
+            text-align: center;
+            background-color: lightsteelblue;
+            font-size: large;
+        }
+        button{
+        background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div><b><a href="{% url 'base' %}">Home</a></b></div>
+            </ul>
+        </nav>
+    </header>
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p><b>Your role: {{ user.role }}</b></p>
+    
+    <!-- Display the upload video option only for players -->
+    {% if user.role == 'player' %}
+        <a href="{% url 'upload_video' %}">Upload Video</a><br>
+    {% else %}
+        <p>You are not allowed to upload videos.</p>
+    {% endif %}
+    
+    <a href="/my-videos/">My Uploaded Videos</a><br>
+ 
+    <a href="{% url 'edit_profile' %}">Edit Profile</a> <br>
+
+    {% if request.user.is_authenticated and request.user.role == 'player' %}
+    <a href="{% url 'edit_player_profile' %}">Player Profile Form</a>
+    {% endif %}
+
+
+    <!-- Other profile page content -->
+</body>
+</html>
