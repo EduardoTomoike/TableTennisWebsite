@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'ttwebsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('ttwebsite'),  # database name
-        'USER': os.getenv('root'),         # MySQL username
-        'PASSWORD': os.getenv('Eyt29012001?'), 
-        'HOST': os.getenv('localhost'),      
+        'NAME': os.getenv('MYSQLDATABASE'),  # database name
+        'USER': os.getenv('MYSQLUSER'),         # MySQL username
+        'PASSWORD': os.getenv('MYSQLPASSWORD'), 
+        'HOST': os.getenv('MYSQLHOST'),      
         'PORT': os.getenv('3306'), 
     }
 }
