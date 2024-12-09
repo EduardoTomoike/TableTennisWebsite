@@ -1,8 +1,7 @@
 [phases.setup]
-runtime = "python:3.12"  # Ensure your Python version matches your app requirements
+runtime = "python:3.12"
 apt_pkgs = [
-    "libmariadb-dev",
-    "gcc",
-    "pkg-config"  # Required for locating MySQL/MariaDB
+    "libpq-dev",  # Required for psycopg2
+    "gcc"
 ]
 

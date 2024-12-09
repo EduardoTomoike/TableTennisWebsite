@@ -9,12 +9,14 @@ gunicorn==23.0.0
 idna==3.10
 imageio==2.35.1
 imageio-ffmpeg==0.5.1
+#mariadb==1.1.11
 moviepy==1.0.3
-mariadb==1.1.11
+#mysqlclient==2.2.4
 numpy==2.1.2
 packaging==24.2
 pillow==10.4.0
 proglog==0.1.10
+psycopg2-binary==2.9.10
 python-dotenv==1.0.1
 requests==2.32.3
 setuptools==75.1.0
@@ -24,4 +26,3 @@ tzdata==2024.1
 urllib3==2.2.3
 waitress==3.0.2
 whitenoise==6.8.2
-#mysqlclient==2.2.4

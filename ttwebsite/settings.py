@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'ttwebsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('MYSQLDATABASE'),  # database name
         'USER': os.getenv('MYSQLUSER'),         # MySQL username
         'PASSWORD': os.getenv('MYSQLPASSWORD'), 
